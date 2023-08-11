@@ -13,6 +13,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: 16
+          distribution: temurin
           server-id: github
       - name: Publish package to GitHub Packages
         run: mvn -B deploy -Dmaven.test.skip
