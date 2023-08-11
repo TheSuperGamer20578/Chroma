@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.TheSuperGamer20578</groupId>
-    <artifactId>Chroma</artifactId>
-    <version>0.1.0-alpha.1</version>
+    <groupId>io.github.thesupergamer20578</groupId>
+    <artifactId>chroma</artifactId>
+    <version>0.1.0-alpha.2</version>
 
     <name>Chroma</name>
     <description>Cross-platform Razer Chroma library for Java</description>
