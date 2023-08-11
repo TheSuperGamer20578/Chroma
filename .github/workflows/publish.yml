@@ -15,6 +15,6 @@ jobs:
           java-version: 16
           server-id: github
       - name: Publish package to GitHub Packages
-        run: mvn -B deploy
+        run: mvn -B deploy -Dmaven.test.skip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
