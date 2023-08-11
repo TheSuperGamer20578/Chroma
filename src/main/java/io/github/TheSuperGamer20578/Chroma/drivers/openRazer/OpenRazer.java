@@ -1,5 +1,6 @@
 package io.github.TheSuperGamer20578.Chroma.drivers.openRazer;
 
+import io.github.TheSuperGamer20578.Chroma.Chroma;
 import io.github.TheSuperGamer20578.Chroma.Colour;
 import io.github.TheSuperGamer20578.Chroma.DeviceType;
 import io.github.TheSuperGamer20578.Chroma.WaveDirection;
@@ -9,16 +10,22 @@ import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder;
 import org.freedesktop.dbus.exceptions.DBusException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The OpenRazer driver for Linux systems.
+ */
 public class OpenRazer implements Driver {
     static final String BUS = "org.razer";
     static final String PATH = "/org/razer";
     private final DBusConnection dbus;
     private final List<Device> devices = new ArrayList<>();
 
+    /**
+     * Instantiates the OpenRazer driver.
+     * {@link Chroma#getDriver()} should be used in most cases instead.
+     * @throws DBusException If there's an error connecting to the OpenRazer DBus.
+     */
     public OpenRazer() throws DBusException {
         dbus = DBusConnectionBuilder.forSessionBus().build();
         for (String serial : dbus.getRemoteObject(BUS, PATH, DBusDevices.class).getDevices()) {

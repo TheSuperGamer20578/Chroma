@@ -6,6 +6,9 @@ import org.apache.commons.lang3.SystemUtils;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * The main class for Chroma used to hold the driver instance for the current platform.
+ */
 public class Chroma {
     private static Driver DRIVER;
 

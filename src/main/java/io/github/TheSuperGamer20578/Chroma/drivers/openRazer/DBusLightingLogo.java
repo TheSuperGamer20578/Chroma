@@ -91,9 +91,6 @@ interface DBusLightingLogo extends DBusInterface {
 
     /**
      * Set the device to blinking mode
-     * @param red Red component
-     * @param green Green component
-     * @param blue Blue component
      */
     void setLogoBlinkingMono();
 

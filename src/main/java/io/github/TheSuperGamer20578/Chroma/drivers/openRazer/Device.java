@@ -21,8 +21,18 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+/**
+ * A class representing a device.
+ */
 public class Device {
+    /**
+     * All the capabilities of the device.
+     */
     public final Capability[] capabilities;
+
+    /**
+     * The serial number of the device.
+     */
     public final String serial;
     private final @Nullable DBusDeviceDpi dpiDBus;
     private final @Nullable DBusDeviceKeyswitchOptimisation keyswitchOptimisationDBus;
@@ -151,10 +161,19 @@ public class Device {
         }
     }
 
+    /**
+     * Check if the device has a capability.
+     * @param capability The capability to check for.
+     * @return Whether the device has the capability.
+     */
     public boolean hasCapability(Capability capability) {
         return Arrays.asList(capabilities).contains(capability);
     }
 
+    /**
+     * Get the type of the device.
+     * @return The type of the device.
+     */
     public DeviceType getDeviceType() {
         try {
             throwForCapability(Capability.TYPE);
@@ -176,6 +195,12 @@ public class Device {
         };
     }
 
+    /**
+     * Set a custom effect on the device.
+     * Does nothing if the device doesn't have the {@link Capability#LIGHTING_LED_MATRIX} capability.
+     * @param matrix The matrix to set.
+     * @throws IllegalArgumentException If the matrix isn't the correct size.
+     */
     public void customEffect(Colour[][] matrix) {
         if (!hasCapability(Capability.LIGHTING_LED_MATRIX)) return;
         assert chromaDBus != null;
@@ -201,6 +226,11 @@ public class Device {
         chromaDBus.setCustom();
     }
 
+    /**
+     * Set the device to a wave effect.
+     * Does nothing if the device doesn't have the {@link Capability#LIGHTING_WAVE} capability.
+     * @param direction The direction of the wave.
+     */
     public void waveEffect(WaveDirection direction) {
         if (!hasCapability(Capability.LIGHTING_WAVE)) return;
         assert chromaDBus != null;
@@ -208,12 +238,20 @@ public class Device {
         chromaDBus.setWave(direction.ordinal() + 1);
     }
 
+    /**
+     * Clears the effect of the device, turns off all LEDs.
+     * Does nothing if the device doesn't have the {@link Capability#LIGHTING_NONE} capability.
+     */
     public void clearEffect() {
         if (!hasCapability(Capability.LIGHTING_NONE)) return;
         assert chromaDBus != null;
         chromaDBus.setNone();
     }
 
+    /**
+     * Set the device to a static effect.
+     * @param colour The colour to set the device to.
+     */
     public void staticEffect(Colour colour) {
         if (!hasCapability(Capability.LIGHTING_STATIC)) return;
         assert chromaDBus != null;
