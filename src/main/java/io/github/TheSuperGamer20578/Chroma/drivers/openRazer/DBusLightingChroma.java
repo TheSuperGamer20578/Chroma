@@ -15,7 +15,7 @@ interface DBusLightingChroma extends DBusInterface {
      * Set the wave effect on the device
      * @param direction 1 - left to right, 2 right to left
      */
-    void setWave(byte direction);
+    void setWave(int direction);
 
     /**
      * Set the device to static colour
@@ -98,7 +98,7 @@ interface DBusLightingChroma extends DBusInterface {
      * Then its 3byte groups of RGB
      * @param payload Binary payload
      */
-    void setKeyRow(byte[] payload);
+    void setKeyRow(Byte[] payload);
 
     /**
      * Set startlight random mode

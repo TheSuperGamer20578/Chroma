@@ -33,7 +33,7 @@ interface DBusDeviceMisc extends DBusInterface {
     /**
      * If the device has an LED matrix
      */
-    byte[] getMatrixDimensions();
+    int[] getMatrixDimensions();
 
     /**
      * If the device has an LED matrix

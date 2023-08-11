@@ -1,5 +1,8 @@
 package io.github.TheSuperGamer20578.Chroma.drivers.openRazer;
 
+import io.github.TheSuperGamer20578.Chroma.Colour;
+import io.github.TheSuperGamer20578.Chroma.DeviceType;
+import io.github.TheSuperGamer20578.Chroma.WaveDirection;
 import org.freedesktop.dbus.annotations.DBusInterfaceName;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.exceptions.DBusException;
@@ -150,5 +153,70 @@ public class Device {
 
     public boolean hasCapability(Capability capability) {
         return Arrays.asList(capabilities).contains(capability);
+    }
+
+    public DeviceType getDeviceType() {
+        try {
+            throwForCapability(Capability.TYPE);
+        } catch (CapabilityNotSupportedException e) {
+            // This should be unreachable because every device has the TYPE capability.
+            throw new IllegalStateException(e);
+        }
+        return switch (miscDBus.getDeviceType()) {
+            case "keyboard" -> DeviceType.KEYBOARD;
+            case "mouse" -> DeviceType.MOUSE;
+            case "headset" -> DeviceType.HEADSET;
+            case "keypad" -> DeviceType.KEYPAD;
+            case "mousemat" -> DeviceType.MOUSEPAD;
+            case "chromalink" -> DeviceType.CHROMA_LINK;
+            // TODO Add a warning if this ever happens.
+            //  If this happens, it means that either there is a new device type or there is a typo in the code.
+            //  Therefore it is important to know if this happens so that it can be reported and fixed.
+            default -> DeviceType.UNKNOWN;
+        };
+    }
+
+    public void customEffect(Colour[][] matrix) {
+        if (!hasCapability(Capability.LIGHTING_LED_MATRIX)) return;
+        assert chromaDBus != null;
+        int[] matrixDimensions = miscDBus.getMatrixDimensions();
+        if (matrix.length != matrixDimensions[0])
+            throw new IllegalArgumentException("Matrix height must be " + matrixDimensions[0]);
+        for (byte i = 0; i < matrix.length; i++) {
+            Colour[] row = matrix[i];
+            if (row.length != matrixDimensions[1])
+                throw new IllegalArgumentException("Matrix width must be " + matrixDimensions[1]);
+            Byte[] payload = new Byte[matrixDimensions[1] * 3 + 3];
+            payload[0] = i;
+            payload[1] = 0;
+            payload[2] = (byte) (matrixDimensions[1] - 1);
+            for (int j = 0; j < row.length; j++) {
+                Colour colour = row[j];
+                payload[j * 3 + 3] = (byte) colour.red;
+                payload[j * 3 + 4] = (byte) colour.green;
+                payload[j * 3 + 5] = (byte) colour.blue;
+            }
+            chromaDBus.setKeyRow(payload);
+        }
+        chromaDBus.setCustom();
+    }
+
+    public void waveEffect(WaveDirection direction) {
+        if (!hasCapability(Capability.LIGHTING_WAVE)) return;
+        assert chromaDBus != null;
+        System.out.println(direction.ordinal());
+        chromaDBus.setWave(direction.ordinal() + 1);
+    }
+
+    public void clearEffect() {
+        if (!hasCapability(Capability.LIGHTING_NONE)) return;
+        assert chromaDBus != null;
+        chromaDBus.setNone();
+    }
+
+    public void staticEffect(Colour colour) {
+        if (!hasCapability(Capability.LIGHTING_STATIC)) return;
+        assert chromaDBus != null;
+        chromaDBus.setStatic(colour.red, colour.green, colour.blue);
     }
 }
