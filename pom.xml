@@ -6,7 +6,7 @@
 
     <groupId>io.github.TheSuperGamer20578</groupId>
     <artifactId>Chroma</artifactId>
-    <version>-SNAPSHOT</version>
+    <version>0.1.0-alpha.1</version>
 
     <name>Chroma</name>
     <description>Cross-platform Razer Chroma library for Java</description>
