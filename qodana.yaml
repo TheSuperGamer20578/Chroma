@@ -1,0 +1,13 @@
+version: "1.0"
+
+profile:
+  path: Qodana-Profiles/java.yaml
+
+projectJDK: 19
+
+plugins:
+  - id: com.intellij.grazie.pro
+
+linter: jetbrains/qodana-jvm:latest
+
+failThreshold: 0
