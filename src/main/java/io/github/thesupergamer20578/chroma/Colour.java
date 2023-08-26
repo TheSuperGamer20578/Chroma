@@ -1,5 +1,7 @@
 package io.github.thesupergamer20578.chroma;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Represents a colour
  */
@@ -55,5 +57,17 @@ public class Colour {
      */
     public Colour multiply(double multiplier) {
         return new Colour((byte) (red * multiplier), (byte) (green * multiplier), (byte) (blue * multiplier));
+    }
+
+    /**
+     * Creates a new colour by averaging the colour channels of this colour and the other colour.
+     * @param other The colour to tint by
+     * @return The new colour, or this colour if the other colour is null.
+     */
+    public Colour tint(@Nullable Colour other) {
+        if (other == null) {
+            return this;
+        }
+        return new Colour((short) ((red + other.red) / 2), (short) ((green + other.green) / 2), (short) ((blue + other.blue) / 2));
     }
 }
