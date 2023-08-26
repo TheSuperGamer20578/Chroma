@@ -110,7 +110,7 @@ public class Device {
                     throw new RuntimeException(e);
                 }
                 try {
-                    return capability.dBusInterface.getMethod(capability.methods[0]).invoke(dBusInterface) == capability.value;
+                    return capability.dBusInterface.getMethod(capability.methods[0]).invoke(dBusInterface).equals(capability.value);
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }
