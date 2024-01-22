@@ -1,9 +1,6 @@
 package io.github.thesupergamer20578.chroma.drivers.openRazer;
 
-import io.github.thesupergamer20578.chroma.Chroma;
-import io.github.thesupergamer20578.chroma.Colour;
-import io.github.thesupergamer20578.chroma.DeviceType;
-import io.github.thesupergamer20578.chroma.WaveDirection;
+import io.github.thesupergamer20578.chroma.*;
 import io.github.thesupergamer20578.chroma.drivers.Driver;
 import org.freedesktop.dbus.connections.impl.DBusConnection;
 import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder;
@@ -36,6 +33,9 @@ public class OpenRazer implements Driver {
     private void addDevice(String serial) throws DBusException {
         devices.add(new Device(dbus, serial));
     }
+
+    @Override
+    public void init() {}
 
     @Override
     public void shutdown() {

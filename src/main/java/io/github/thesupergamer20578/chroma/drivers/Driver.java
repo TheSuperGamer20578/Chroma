@@ -1,5 +1,6 @@
 package io.github.thesupergamer20578.chroma.drivers;
 
+import io.github.thesupergamer20578.chroma.ApplicationInfo;
 import io.github.thesupergamer20578.chroma.Colour;
 import io.github.thesupergamer20578.chroma.WaveDirection;
 
@@ -7,6 +8,18 @@ import io.github.thesupergamer20578.chroma.WaveDirection;
  * The driver interface.
  */
 public interface Driver {
+    /**
+     * Initializes the driver.
+     * This method should be called before any other methods.
+     * Calling this method multiple times may cause unexpected behaviour.
+     * @param applicationInfo The application info, shows up in the Connect tab in Razer Synapse on windows.
+     */
+    default void init(ApplicationInfo applicationInfo) {
+        init();
+    }
+
+    void init();
+
     /**
      * Shuts down the driver and releases any resources it's using.
      * This method should be called when the driver is no longer needed.

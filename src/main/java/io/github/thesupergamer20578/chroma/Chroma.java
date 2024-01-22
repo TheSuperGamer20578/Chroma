@@ -1,6 +1,7 @@
 package io.github.thesupergamer20578.chroma;
 
 import io.github.thesupergamer20578.chroma.drivers.Driver;
+import io.github.thesupergamer20578.chroma.drivers.razerSynapse.RazerSynapse;
 import io.github.thesupergamer20578.chroma.drivers.openRazer.OpenRazer;
 import org.apache.commons.lang3.SystemUtils;
 import org.freedesktop.dbus.exceptions.DBusException;
@@ -24,9 +25,10 @@ public class Chroma {
 
         if (SystemUtils.IS_OS_LINUX) {
             DRIVER = new OpenRazer();
-            return DRIVER;
+        } else if (SystemUtils.IS_OS_WINDOWS) {
+            DRIVER = new RazerSynapse();
         }
 
-        return null;
+        return DRIVER;
     }
 }
